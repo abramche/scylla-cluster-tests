@@ -268,6 +268,14 @@ class SCTConfiguration(dict):
                   Time in minutes, Time of execution for stress commands from stress_cmd parameters
                   and is used in test duration calculation
              """),
+        dict(name="alternator_stress_rate", env="SCT_ALTERNATOR_STRESS_RATE", type=int,
+             help="""
+                  Number of operations per second to achieve in stress commands for alternator testing.
+             """),
+        dict(name="alternator_write_always_lwt_stress_rate", env="SCT_ALTERNATOR_WRITE_ALWAYS_LWT_STRESS_RATE", type=int,
+             help="""
+                  Number of operations per second to achieve in stress commands for alternator testing, in write test with isolation set to always LWT. If non-zero, overwrites alternator_stress_rate.
+             """),
         dict(name="n_db_nodes", env="SCT_N_DB_NODES", type=int_or_space_separated_ints,
              help="""Number list of database data nodes in multiple data centers. To use with
              multi data centers and zero nodes, dc with zero-nodes only should be set as 0,
@@ -1812,6 +1820,13 @@ class SCTConfiguration(dict):
 
         dict(name="xcloud_replication_factor", env="SCT_XCLOUD_REPLICATION_FACTOR", type=int,
              help="Replication factor for Scylla Cloud cluster (default: 3)"),
+
+        dict(name="xcloud_vpc_peering", env="SCT_XCLOUD_VPC_PEERING", type=dict_or_str,
+             help="""Dictionary of VPC peering parameters for private connectivity between
+             SCT infrastructure and Scylla Cloud. The following parameters are used:
+                enabled: bool - indicates whether VPC peering is to be used
+                cidr_pool_base: str - base of CIDR pool to use for cluster private networks ('172.31.0.0/16' by default)
+                cidr_subnet_size: int - size of subnet to use for cluster private network (24 by default)"""),
 
         dict(name="n_vs_nodes", env="SCT_N_VS_NODES", type=int,
              help="Number of vector store nodes (0 = VS is disabled)"),
