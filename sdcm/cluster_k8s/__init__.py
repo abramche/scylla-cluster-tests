@@ -310,6 +310,7 @@ class KubernetesCluster(metaclass=abc.ABCMeta):
         self.params = params
         self.api_call_rate_limiter = None
         self.k8s_scylla_cluster_name = self.params.get('k8s_scylla_cluster_name')
+        self.docker_hub_auth_secret = "docker-auth"
         self.scylla_config_lock = RLock()
         self.scylla_restart_required = False
         self.scylla_cpu_limit = None
@@ -457,7 +458,7 @@ class KubernetesCluster(metaclass=abc.ABCMeta):
         self.log.info("Create docker hub auth secret in '%s'", namespace)
         docker_hub_url = "https://index.docker.io/v1/"
         docker_hub_creds = get_docker_hub_credentials()
-        self.kubectl(f"create secret docker-registry docker-auth "
+        self.kubectl(f"create secret docker-registry {self.docker_hub_auth_secret} "
                      f"--docker-server={docker_hub_url} "
                      f"--docker-username={docker_hub_creds['username']} "
                      f"--docker-password={docker_hub_creds['password']} "
