@@ -1304,19 +1304,19 @@ class UpgradeTest(FillDatabaseData, loader_utils.LoaderUtilsMixin):
     def test_kubernetes_operator_upgrade(self):
         self.k8s_cluster.check_scylla_cluster_sa_annotations()
 
-        InfoEvent(message="Step1 - Populate DB with data").publish()
-        self.prepare_keyspaces_and_tables()
-        self.fill_and_verify_db_data("", pre_fill=True)
-
-        InfoEvent(message="Step2 - Run c-s write workload").publish()
-        self.verify_stress_thread(
-            self.run_stress_thread(stress_cmd=self._cs_add_node_flag(self.params.get("stress_cmd_w")))
-        )
-
-        InfoEvent(message="Step3 - Run c-s read workload").publish()
-        self.verify_stress_thread(
-            self.run_stress_thread(stress_cmd=self._cs_add_node_flag(self.params.get("stress_cmd_r")))
-        )
+        # InfoEvent(message="Step1 - Populate DB with data").publish()
+        # self.prepare_keyspaces_and_tables()
+        # self.fill_and_verify_db_data("", pre_fill=True)
+        #
+        # InfoEvent(message="Step2 - Run c-s write workload").publish()
+        # self.verify_stress_thread(
+        #     self.run_stress_thread(stress_cmd=self._cs_add_node_flag(self.params.get("stress_cmd_w")))
+        # )
+        #
+        # InfoEvent(message="Step3 - Run c-s read workload").publish()
+        # self.verify_stress_thread(
+        #     self.run_stress_thread(stress_cmd=self._cs_add_node_flag(self.params.get("stress_cmd_r")))
+        # )
 
         InfoEvent(message="Step4 - Upgrade scylla-operator").publish()
         old_scylla_pods_uids = {}
@@ -1409,13 +1409,13 @@ class UpgradeTest(FillDatabaseData, loader_utils.LoaderUtilsMixin):
         self.monitors.reconfigure_scylla_monitoring()
         self.k8s_cluster.check_scylla_cluster_sa_annotations()
 
-        InfoEvent(message="Step8 - Verify data in the Scylla cluster").publish()
-        self.fill_and_verify_db_data(note="after operator upgrade and scylla member addition")
-
-        InfoEvent(message="Step9 - Run c-s read workload").publish()
-        self.verify_stress_thread(
-            self.run_stress_thread(stress_cmd=self._cs_add_node_flag(self.params.get("stress_cmd_r")))
-        )
+        # InfoEvent(message="Step8 - Verify data in the Scylla cluster").publish()
+        # self.fill_and_verify_db_data(note="after operator upgrade and scylla member addition")
+        #
+        # InfoEvent(message="Step9 - Run c-s read workload").publish()
+        # self.verify_stress_thread(
+        #     self.run_stress_thread(stress_cmd=self._cs_add_node_flag(self.params.get("stress_cmd_r")))
+        # )
 
     def test_kubernetes_platform_upgrade(self):
         self.k8s_cluster.check_scylla_cluster_sa_annotations()

@@ -3549,6 +3549,7 @@ class FillDatabaseData(ClusterTester):
                     for truncate in item["truncates"]:
                         truncates.append(truncate)
             else:
+                self.log.info(f"Item: {item['name']} not subject to skipping")
                 self.all_verification_items[test_num]["skip_condition"] = False
         for truncate in truncates:
             # timeout was enlarged cause of
