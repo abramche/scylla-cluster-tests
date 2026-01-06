@@ -88,7 +88,6 @@ def is_tablets_feature_enabled(node: BaseNode) -> bool:
     with node.remote_scylla_yaml() as scylla_yaml:
         # for backward compatibility of 2024.1 and earlier
         scylla_conf = scylla_yaml.model_dump()
-        raise ValueError(f"##### Scylla config: {scylla_conf}")
         if "tablets" in (scylla_conf.get("experimental_features") or []):
             return True
         if scylla_conf.get("enable_tablets"):
