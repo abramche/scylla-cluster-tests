@@ -57,3 +57,6 @@ k8s_instance_type_auxiliary: 't3.large'
 #       '--blocked-reactor-notify-ms 100' cannot be set, because it gets set by operator itself
 append_scylla_args: '--abort-on-lsa-bad-alloc 1 --abort-on-internal-error 1 --abort-on-ebadf 1 --enable-sstable-key-validation 1'
 docker_image: ''
+
+experimental_features:
+  - tablets
