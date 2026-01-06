@@ -24,6 +24,7 @@ import re
 from collections import OrderedDict
 from uuid import UUID
 
+import cassandra
 from cassandra import InvalidRequest
 from cassandra.util import sortedset, SortedSet
 from cassandra import ConsistencyLevel
@@ -3540,8 +3541,10 @@ class FillDatabaseData(ClusterTester):
                         # waiting the schema agreement
                         if "CREATE INDEX" in create_table.upper():
                             time.sleep(15)
-                        self.log.debug("create table: %s", create_table)
-                        session.execute(create_table)
+                        try:
+                            session.execute(create_table)
+                        except cassandra.InvalidRequest as e:
+                            raise ValueError(f"Request '{create_table}' failed with the error: {e}")
                         # sleep for 15 seconds to wait creating cdc tables
                         self.db_cluster.wait_for_schema_agreement()
                         if "CREATE TYPE" in create_table.upper():
